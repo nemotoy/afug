@@ -25,7 +25,6 @@ linters:
     - staticcheck
     - prealloc
     - ineffassign
-    - unused
     - gocyclo
     - gosimple
     - structcheck
