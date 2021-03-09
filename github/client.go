@@ -2,7 +2,6 @@ package client
 
 import (
 	"context"
-	"os"
 
 	"github.com/shurcooL/githubv4"
 	"golang.org/x/oauth2"
@@ -26,7 +25,7 @@ type repository struct {
 		Color githubv4.String
 		Name  githubv4.String
 	}
-	StargazerCount githubv4.Int
+	StargazerCount githubv4.Int // TODO: use k m.
 }
 
 type language struct {
@@ -39,9 +38,9 @@ type Client struct {
 }
 
 // TODO: add optinal settings to a http client
-func NewClient(ctx context.Context, tokenKey string) *Client {
+func NewClient(ctx context.Context, token string) *Client {
 	httpClient := oauth2.NewClient(ctx, oauth2.StaticTokenSource(
-		&oauth2.Token{AccessToken: os.Getenv(tokenKey)},
+		&oauth2.Token{AccessToken: token},
 	))
 	return &Client{c: githubv4.NewClient(httpClient)}
 }
