@@ -21,10 +21,7 @@ type starredRepositoritoryEdge struct {
 }
 
 type repository struct {
-	URL       githubv4.URI
-	Languages struct {
-		Nodes []language
-	} `graphql:"languages(last:10)"`
+	URL             githubv4.URI
 	PrimaryLanguage struct {
 		Color githubv4.String
 		Name  githubv4.String
@@ -35,9 +32,6 @@ type repository struct {
 type language struct {
 	Color githubv4.String
 	Name  githubv4.String
-}
-
-type StarredRepo struct {
 }
 
 type Client struct {
@@ -52,8 +46,7 @@ func NewClient(ctx context.Context, tokenKey string) *Client {
 	return &Client{c: githubv4.NewClient(httpClient)}
 }
 
-// TODO: return named type
-func (c *Client) GetStarredRepo(ctx context.Context) ([]StarredRepo, error) {
+func (c *Client) GetUsersStarredRepos(ctx context.Context) ([]User, error) {
 
 	var query struct {
 		Viewer struct {
@@ -73,6 +66,6 @@ func (c *Client) GetStarredRepo(ctx context.Context) ([]StarredRepo, error) {
 	if err != nil {
 		return nil, err
 	}
-	// TODO:
-	return []StarredRepo{}, err
+
+	return query.Viewer.Following.Nodes, nil
 }
