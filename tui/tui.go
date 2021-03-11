@@ -34,6 +34,19 @@ func (t *TUI) Run() error {
 	return t.app.SetRoot(t.layout, true).SetFocus(t.table).Run()
 }
 
+func (t *TUI) SetTableFrame() *TUI {
+	t.table.SetCell(0, 1,
+		tview.NewTableCell("ID").
+			SetAlign(tview.AlignLeft))
+	t.table.SetCell(0, 2,
+		tview.NewTableCell("Language").
+			SetAlign(tview.AlignLeft))
+	t.table.SetCell(0, 3,
+		tview.NewTableCell("URL").
+			SetAlign(tview.AlignLeft))
+	return t
+}
+
 func (t *TUI) SetUsers(users []gh.User) *TUI {
 
 	var row int = 1
