@@ -36,18 +36,19 @@ func (t *TUI) Run() error {
 
 func (t *TUI) SetUsers(users []gh.User) *TUI {
 
-	var id int = 1
+	var row int = 1
 	for _, user := range users {
 		for _, repo := range user.StarredRepositories.Nodes {
-			t.table.SetCell(id, 0,
+			t.table.SetCell(row, 1,
 				tview.NewTableCell(string(user.Name)).
 					SetAlign(tview.AlignLeft))
-			t.table.SetCell(id, 1,
+			t.table.SetCell(row, 2,
 				tview.NewTableCell(string(repo.PrimaryLanguage.Name)).
 					SetAlign(tview.AlignLeft))
-			t.table.SetCell(id, 2,
+			t.table.SetCell(row, 3,
 				tview.NewTableCell(repo.URL.String()).
 					SetAlign(tview.AlignLeft))
+			row++
 		}
 	}
 	return t
