@@ -34,7 +34,6 @@ func (t *TUI) Run() error {
 	return t.app.SetRoot(t.layout, true).SetFocus(t.table).Run()
 }
 
-// TODO: handle githubv4.URI
 func (t *TUI) SetUsers(users []gh.User) *TUI {
 
 	var id int = 1
@@ -47,7 +46,7 @@ func (t *TUI) SetUsers(users []gh.User) *TUI {
 				tview.NewTableCell(string(repo.PrimaryLanguage.Name)).
 					SetAlign(tview.AlignLeft))
 			t.table.SetCell(id, 2,
-				tview.NewTableCell("-").
+				tview.NewTableCell(repo.URL.String()).
 					SetAlign(tview.AlignLeft))
 		}
 	}
