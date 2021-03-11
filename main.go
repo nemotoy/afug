@@ -29,8 +29,7 @@ func main() {
 
 	time.Sleep(3 * time.Second)
 
-	app := tui.NewAppWithWidget()
-	app.SetUsers(users)
+	app := tui.NewAppWithWidget().SetUsers(users)
 	if err := app.Run(); err != nil {
 		fmt.Println(err)
 		os.Exit(1)

@@ -35,7 +35,7 @@ func (t *TUI) Run() error {
 }
 
 // TODO: handle githubv4.URI
-func (t *TUI) SetUsers(users []gh.User) {
+func (t *TUI) SetUsers(users []gh.User) *TUI {
 
 	var id int = 1
 	for _, user := range users {
@@ -51,4 +51,5 @@ func (t *TUI) SetUsers(users []gh.User) {
 					SetAlign(tview.AlignLeft))
 		}
 	}
+	return t
 }
