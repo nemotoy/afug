@@ -24,13 +24,12 @@ func NewAppWithWidget() *TUI {
 	})
 
 	table := tview.NewTable().
-		SetBorders(false)
+		SetBorders(false).
+		SetFixed(1, 1)
 
 	layout := tview.NewGrid().
-		SetRows(3, 0, 3).
-		SetColumns(30, 0, 30).
 		SetBorders(false).
-		AddItem(table, 1, 0, 1, 3, 0, 100, false)
+		AddItem(table, 0, 0, 3, 3, 0, 100, false)
 
 	return &TUI{
 		app:    app,
@@ -72,6 +71,34 @@ func (t *TUI) SetUsers(users []gh.User) *TUI {
 					SetAlign(tview.AlignLeft))
 			row++
 		}
+	}
+	return t
+}
+
+func (t *TUI) SetStub() *TUI {
+	users := []struct {
+		ID   string
+		Name string
+		URL  string
+	}{
+		{"aaa", "aaa", "https://google.com"},
+		{"aaa", "aaa", "https://google.com"},
+		{"aaa", "aaa", "https://google.com"},
+		{"aaa", "aaa", "https://google.com"},
+		{"aaa", "aaa", "https://google.com"},
+	}
+	var row int = 1
+	for _, user := range users {
+		t.table.SetCell(row, 1,
+			tview.NewTableCell(user.ID).
+				SetAlign(tview.AlignLeft))
+		t.table.SetCell(row, 2,
+			tview.NewTableCell(user.Name).
+				SetAlign(tview.AlignLeft))
+		t.table.SetCell(row, 3,
+			tview.NewTableCell(user.URL).
+				SetAlign(tview.AlignLeft))
+		row++
 	}
 	return t
 }
