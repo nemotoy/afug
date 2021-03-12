@@ -1,6 +1,7 @@
 package tui
 
 import (
+	tcell "github.com/gdamore/tcell/v2"
 	gh "github.com/nemotoy/afug/github"
 	"github.com/rivo/tview"
 )
@@ -13,6 +14,10 @@ type TUI struct {
 
 func NewAppWithWidget() *TUI {
 	app := tview.NewApplication()
+	app.SetInputCapture(func(e *tcell.EventKey) *tcell.EventKey {
+		// TODO: set captures
+		return e
+	})
 
 	table := tview.NewTable().
 		SetBorders(false)
