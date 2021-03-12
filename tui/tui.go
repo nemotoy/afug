@@ -15,7 +15,11 @@ type TUI struct {
 func NewAppWithWidget() *TUI {
 	app := tview.NewApplication()
 	app.SetInputCapture(func(e *tcell.EventKey) *tcell.EventKey {
-		// TODO: set captures
+		switch e.Key() {
+		case tcell.KeyEnter:
+			app.Stop()
+			return nil
+		}
 		return e
 	})
 
