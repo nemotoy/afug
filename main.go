@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"os"
+	"time"
 
 	gh "github.com/nemotoy/afug/github"
 	"github.com/nemotoy/afug/tui"
@@ -12,7 +13,9 @@ import (
 func main() {
 
 	cli := gh.NewClient(context.Background(), os.Getenv("GITHUB_TOKEN"))
-	users, err := cli.GetUsersStarredRepos(context.Background())
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+	users, err := cli.GetUsersStarredRepos(ctx)
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)
