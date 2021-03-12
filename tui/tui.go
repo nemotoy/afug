@@ -43,14 +43,18 @@ func (t *TUI) Run() error {
 }
 
 func (t *TUI) SetTableFrame() *TUI {
+	color := tcell.ColorYellow
 	t.table.SetCell(0, 1,
-		tview.NewTableCell("ID").
+		tview.NewTableCell("Name").
+			SetTextColor(color).
 			SetAlign(tview.AlignLeft))
 	t.table.SetCell(0, 2,
 		tview.NewTableCell("Language").
+			SetTextColor(color).
 			SetAlign(tview.AlignLeft))
 	t.table.SetCell(0, 3,
 		tview.NewTableCell("URL").
+			SetTextColor(color).
 			SetAlign(tview.AlignLeft))
 	return t
 }
