@@ -44,7 +44,7 @@ func NewClient(ctx context.Context, token string) *Client {
 	return &Client{c: githubv4.NewClient(httpClient)}
 }
 
-func (c *Client) GetUsersStarredRepos(ctx context.Context) ([]User, error) {
+func (c *Client) GetUsersStarredRepos(ctx context.Context, users int, repos int) ([]User, error) {
 
 	var query struct {
 		Viewer struct {
@@ -54,10 +54,9 @@ func (c *Client) GetUsersStarredRepos(ctx context.Context) ([]User, error) {
 		}
 	}
 
-	// TODO: DI
 	variables := map[string]interface{}{
-		"followingLast":           githubv4.Int(10),
-		"starredRepositoriesLast": githubv4.Int(10),
+		"followingLast":           githubv4.Int(users),
+		"starredRepositoriesLast": githubv4.Int(repos),
 	}
 
 	err := c.c.Query(ctx, &query, variables)
