@@ -8,7 +8,7 @@ import (
 )
 
 type User struct {
-	Name                githubv4.String
+	Login               githubv4.String
 	StarredRepositories struct {
 		Edges []starredRepositoritoryEdge
 		Nodes []repository

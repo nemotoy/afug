@@ -71,7 +71,7 @@ func (t *TUI) SetUsers(users []gh.User) *TUI {
 	for _, user := range users {
 		for _, repo := range user.StarredRepositories.Nodes {
 			t.table.SetCell(row, 1,
-				tview.NewTableCell(string(user.Name)).
+				tview.NewTableCell(string(user.Login)).
 					SetAlign(tview.AlignLeft))
 			t.table.SetCell(row, 2,
 				tview.NewTableCell(string(repo.PrimaryLanguage.Name)).
