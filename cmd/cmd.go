@@ -20,13 +20,17 @@ var opts struct {
 func init() {
 	parser := flags.NewParser(&opts, flags.Default)
 	parser.Name, parser.Usage = "afug", "[options]"
-	_, err := parser.Parse()
+	args, err := parser.Parse()
 	if err != nil {
+		os.Exit(1)
+	}
+	if len(args) == 0 {
+		parser.WriteHelp(os.Stdout)
 		os.Exit(1)
 	}
 }
 
-func Execute() {
+func Execute() int {
 	cli := gh.NewClient(context.Background(), os.Getenv("GITHUB_TOKEN"))
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
@@ -34,12 +38,13 @@ func Execute() {
 	users, err := cli.GetUsersStarredRepos(ctx, opts.FollowingUsers, opts.StarredRepos)
 	if err != nil {
 		fmt.Printf("fetch users failed: %v\n", err)
-		os.Exit(1)
+		return 1
 	}
 
 	app := tui.NewAppWithWidget().SetTableFrame().SetUsers(users)
 	if err := app.Run(); err != nil {
 		fmt.Printf("app failed: %v\n", err)
-		os.Exit(1)
+		return 1
 	}
+	return 0
 }

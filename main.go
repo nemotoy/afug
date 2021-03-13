@@ -1,9 +1,11 @@
 package main
 
 import (
+	"os"
+
 	"github.com/nemotoy/afug/cmd"
 )
 
 func main() {
-	cmd.Execute()
+	os.Exit(cmd.Execute())
 }
