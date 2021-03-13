@@ -25,7 +25,7 @@ type repository struct {
 		Color githubv4.String
 		Name  githubv4.String
 	}
-	StargazerCount githubv4.Int // TODO: use k m.
+	StargazerCount githubv4.Int
 }
 
 type language struct {
@@ -37,7 +37,6 @@ type Client struct {
 	c *githubv4.Client
 }
 
-// TODO: add optinal settings to a http client
 func NewClient(ctx context.Context, token string) *Client {
 	httpClient := oauth2.NewClient(ctx, oauth2.StaticTokenSource(
 		&oauth2.Token{AccessToken: token},
@@ -57,7 +56,7 @@ func (c *Client) GetUsersStarredRepos(ctx context.Context) ([]User, error) {
 
 	// TODO: DI
 	variables := map[string]interface{}{
-		"followingLast":           githubv4.Int(10), // TODO: want to get all following users
+		"followingLast":           githubv4.Int(10),
 		"starredRepositoriesLast": githubv4.Int(10),
 	}
 
