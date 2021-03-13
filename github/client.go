@@ -12,7 +12,7 @@ type User struct {
 	StarredRepositories struct {
 		Edges []starredRepositoritoryEdge
 		Nodes []repository
-	} `graphql:"starredRepositories(last: $starredRepositoriesLast)"`
+	} `graphql:"starredRepositories(last: $starredRepositoriesLast, orderBy: {direction: ASC, field: STARRED_AT})"`
 }
 
 type starredRepositoritoryEdge struct {
@@ -57,8 +57,8 @@ func (c *Client) GetUsersStarredRepos(ctx context.Context) ([]User, error) {
 
 	// TODO: DI
 	variables := map[string]interface{}{
-		"followingLast":           githubv4.Int(5),
-		"starredRepositoriesLast": githubv4.Int(5),
+		"followingLast":           githubv4.Int(10), // TODO: want to get all following users
+		"starredRepositoriesLast": githubv4.Int(10),
 	}
 
 	err := c.c.Query(ctx, &query, variables)
