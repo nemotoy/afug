@@ -1,6 +1,8 @@
 package tui
 
 import (
+	"strconv"
+
 	tcell "github.com/gdamore/tcell/v2"
 	gh "github.com/nemotoy/afug/github"
 	"github.com/rivo/tview"
@@ -53,6 +55,10 @@ func (t *TUI) SetTableFrame() *TUI {
 			SetTextColor(color).
 			SetAlign(tview.AlignLeft))
 	t.table.SetCell(0, 3,
+		tview.NewTableCell("Star").
+			SetTextColor(color).
+			SetAlign(tview.AlignLeft))
+	t.table.SetCell(0, 4,
 		tview.NewTableCell("URL").
 			SetTextColor(color).
 			SetAlign(tview.AlignLeft))
@@ -71,6 +77,9 @@ func (t *TUI) SetUsers(users []gh.User) *TUI {
 				tview.NewTableCell(string(repo.PrimaryLanguage.Name)).
 					SetAlign(tview.AlignLeft))
 			t.table.SetCell(row, 3,
+				tview.NewTableCell(strconv.Itoa(int(repo.StargazerCount))).
+					SetAlign(tview.AlignLeft))
+			t.table.SetCell(row, 4,
 				tview.NewTableCell(repo.URL.String()).
 					SetAlign(tview.AlignLeft))
 			row++
