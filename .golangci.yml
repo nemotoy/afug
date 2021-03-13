@@ -1,0 +1,36 @@
+run:
+  deadline: 5m
+
+linters-settings:
+  gocyclo:
+    min-complexity: 15
+  errcheck:
+    ignore: Read|Write|Close|Exec
+
+issues:
+  exclude-rules:
+    - path: _test\.go
+      linters:
+        - gocyclo
+        - errcheck
+        - ineffassign
+
+linters:
+  disable-all: true
+  enable:
+    - goimports
+    - govet
+    - misspell
+    - errcheck
+    - staticcheck
+    - prealloc
+    - ineffassign
+    - gocyclo
+    - gosimple
+    - structcheck
+    - varcheck
+    - maligned
+    - gosec
+
+service:
+  golangci-lint-version: 1.38
