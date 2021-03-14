@@ -15,16 +15,6 @@ type TUI struct {
 }
 
 func NewAppWithWidget() *TUI {
-	app := tview.NewApplication()
-	app.SetInputCapture(func(e *tcell.EventKey) *tcell.EventKey {
-		switch e.Key() {
-		case tcell.KeyEnter:
-			app.Stop()
-			return nil
-		}
-		return e
-	})
-
 	table := tview.NewTable().
 		SetBorders(false).
 		SetFixed(1, 1)
@@ -32,6 +22,18 @@ func NewAppWithWidget() *TUI {
 	layout := tview.NewGrid().
 		SetBorders(false).
 		AddItem(table, 0, 0, 3, 3, 0, 100, false)
+
+	app := tview.NewApplication()
+	app.SetInputCapture(func(e *tcell.EventKey) *tcell.EventKey {
+		switch e.Key() {
+		case tcell.KeyEnter:
+			app.Stop()
+			return nil
+		case tcell.KeyUp:
+			table.ScrollToBeginning()
+		}
+		return e
+	})
 
 	return &TUI{
 		app:    app,
