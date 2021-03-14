@@ -13,19 +13,15 @@ import (
 )
 
 var opts struct {
-	FollowingUsers int `short:"u" long:"users" description:"number of displaying following users"`
-	StarredRepos   int `short:"r" long:"repos" description:"number of displaying starred repositories"`
+	FollowingUsers int `short:"u" long:"users" description:"number of displaying following users" required:"true"`
+	StarredRepos   int `short:"r" long:"repos" description:"number of displaying starred repositories" required:"true"`
 }
 
 func init() {
 	parser := flags.NewParser(&opts, flags.Default)
 	parser.Name, parser.Usage = "afug", "[options]"
-	args, err := parser.Parse()
+	_, err := parser.Parse()
 	if err != nil {
-		os.Exit(1)
-	}
-	if len(args) == 0 {
-		parser.WriteHelp(os.Stdout)
 		os.Exit(1)
 	}
 }
