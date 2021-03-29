@@ -13,8 +13,9 @@ import (
 )
 
 var opts struct {
-	FollowingUsers int `short:"u" long:"users" description:"number of displaying following users" required:"true"`
-	StarredRepos   int `short:"r" long:"repos" description:"number of displaying starred repositories" required:"true"`
+	TokenPath      string `short:"tk" long:"token" description:"custom token path"`
+	FollowingUsers int    `short:"u" long:"users" description:"number of displaying following users" required:"true"`
+	StarredRepos   int    `short:"r" long:"repos" description:"number of displaying starred repositories" required:"true"`
 }
 
 func init() {
@@ -27,7 +28,11 @@ func init() {
 }
 
 func Execute() int {
-	cli := gh.NewClient(context.Background(), os.Getenv("GITHUB_TOKEN"))
+	key := "GITHUB_TOKEN"
+	if opts.TokenPath != "" {
+		key = opts.TokenPath
+	}
+	cli := gh.NewClient(context.Background(), os.Getenv(key))
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 
